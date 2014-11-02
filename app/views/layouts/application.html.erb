@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SocialLifeCoordinator</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<title>Slc</title>
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	<%= csrf_meta_tags %>
 
-<%= yield %>
+
+	<table style="border:black 2px">
+		<tbody>
+			<tr><b>Landing page</b></tr><br><br>
+			<tr><b>Social Life Coordinator</b></tr><br><br><br>
+			<tr><b>Sign in to suggest and vote on activities</b></tr><br>
+			<tr>
+				<div id="user_nav">
+					<% if current_user %>
+						<td>Logged in as <%= current_user.username %><td>
+						<td><%= button_to "Sign Out", log_out_path, method: :get %></td>
+					<% else %> 
+						<td><%= button_to "Create an account", new_user_path, method: :get %></td> 
+						<td><%= button_to "Sign In", new_session_path, method: :get %></td>
+					<% end %>
+				</div>     
+				</tr>
+			</tbody>
+		</table>
+
+
+		<% flash.each do |name, msg| %>
+		<%= content_tag :div, msg, :id => "flash_#{name}" %>
+		<% end %>
+	</head>
+	<body>
+
+	<%= yield %>
 
 </body>
 </html>

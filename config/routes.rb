@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  resources :users
+
+  resources :activities
+  resources :sessions, only: [:new, :create, :destroy]
+  
+  root 'activities#home'
+  get "log_out" => "sessions#destroy", :as => "log_out"
+  post "vote/:id" => "activities#vote", :as => "vote"
+  post "delete_vote/:id" => "activities#delete_vote", :as => "delete_vote"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

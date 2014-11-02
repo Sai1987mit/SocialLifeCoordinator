@@ -1,0 +1,34 @@
+<br><br>
+<b>Day, Date</b><br><br>
+<b>Forecast</b><br>
+ temp: 23 C
+<table>
+  <thead>
+    <tr>
+      <th>Activities</th>
+      <th>Voting</th>
+      <% if current_user %>
+		<th>Vote</th>
+	  <%end%>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @values.each do |activity| %>
+      <tr>
+        <td><%= activity.name %></td>
+        <td><%= activity.users.count %></td>
+        <% if current_user %>
+			<% if activity.users.include?(current_user)	%>
+				<td><%= button_to 'Unvote', delete_vote_path(activity) %></td>
+			<%else%>
+				<td><%= button_to 'Vote', vote_path(activity) %></td>
+			<%end%>
+		<%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if current_user %>
+<%= button_to 'Create activity', new_activity_path, method: :get %>
+<%end%>
