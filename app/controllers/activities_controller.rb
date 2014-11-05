@@ -7,13 +7,13 @@ class ActivitiesController < ApplicationController
   end
   
   def vote
-    if current_user.activities.where(date: Activity.weekend_dates[1]).count < 1 
+    if current_user.activities.where(date: Activity.weekend_dates[1]).count	< 1 
       current_user.activities << @activity
-    elsif current_user.activities.where(date: Activity.weekend_dates[0]).count  < 1 
-      current_user.activities << @activity
-    else
-      puts "You cannot vote more than one activity for a day"
-      flash.now[:error] = 'You cannot vote more than one activity for a day'
+    elsif current_user.activities.where(date: Activity.weekend_dates[0]).count	< 1 
+  	  current_user.activities << @activity
+	  else
+	    puts "You cannot vote more than one activity for a day"
+	    flash.now[:error] = 'You cannot vote more than one activity for a day'
     end
     redirect_to root_url
   end

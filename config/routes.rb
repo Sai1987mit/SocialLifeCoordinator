@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "log_out" => "sessions#destroy", :as => "log_out"
   post "vote/:id" => "activities#vote", :as => "vote"
   post "delete_vote/:id" => "activities#delete_vote", :as => "delete_vote"
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
