@@ -2,11 +2,19 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy, :vote, :delete_vote]
   
   def home
-    @values = Activity.where(:date == Date.today)
+    @firstday_activities = Activity.where(date: Activity.weekend_dates[0])
+    @seconday_activities = Activity.where(date: Activity.weekend_dates[1])
   end
   
   def vote
-    current_user.activities << @activity
+    if current_user.activities.where(date: Activity.weekend_dates[1]).count < 1 
+      current_user.activities << @activity
+    elsif current_user.activities.where(date: Activity.weekend_dates[0]).count  < 1 
+      current_user.activities << @activity
+    else
+      puts "You cannot vote more than one activity for a day"
+      flash.now[:error] = 'You cannot vote more than one activity for a day'
+    end
     redirect_to root_url
   end
   
@@ -39,10 +47,11 @@ class ActivitiesController < ApplicationController
   # POST /activities.json
   def create
     @activity = Activity.new(activity_params)
+    @activity.user_id= current_user.id
 
     respond_to do |format|
       if @activity.save
-        # format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
+        format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
         format.json { render :show, status: :created, location: @activity }
       else
         format.html { render :new }
