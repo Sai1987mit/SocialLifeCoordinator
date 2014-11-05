@@ -1,6 +1,7 @@
 class Activity < ActiveRecord::Base
   has_and_belongs_to_many :users
-
+  belongs_to :user
+  
   def self.weekend_dates
     if Date.today.wday == 1
       [Date.today+5, Date.today+6]

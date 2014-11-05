@@ -3,7 +3,7 @@ class CreateActivities < ActiveRecord::Migration
     create_table :activities do |t|
       t.string :name
       t.date :date
-      
+      t.belongs_to :user
       t.timestamps
     end
   end
